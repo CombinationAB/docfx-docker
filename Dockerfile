@@ -23,10 +23,16 @@ RUN curl -L "http://sourceforge.net/projects/plantuml/files/plantuml.{PLANTUML_V
 
 # Install dotnet
 RUN curl -L https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /etc/apt/trusted.gpg.d/microsoft.asc.gpg \
-&& curl -o /etc/apt/sources.list.d/microsoft-prod.list https://packages.microsoft.com/config/debian/9/prod.list \
-&& apt-get update \
-&& apt-get install --no-install-recommends -y dotnet-sdk-3.1 \
-&& rm -rf /var/lib/apt/lists/*
+ && curl -o /etc/apt/sources.list.d/microsoft-prod.list https://packages.microsoft.com/config/debian/9/prod.list \
+ && apt-get update \
+ && apt-get install --no-install-recommends -y dotnet-sdk-3.1 \
+ && rm -rf /var/lib/apt/lists/*
+
+# Install git
+RUN apt-get update \
+ && apt-get install --no-install-recommends -y git \
+ && rm -rf /var/lib/apt/lists/*
+
 
 ENTRYPOINT [ "/usr/bin/docfx" ]
 
