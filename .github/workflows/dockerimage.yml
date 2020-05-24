@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Build Docker image
 
 on:
   push:
@@ -10,9 +10,14 @@ jobs:
 
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        docfx_version: [2.50]
 
     steps:
     - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+    - name: Build Docker image
+      run: docker build . --file Dockerfile --build-arg DOCFX_VERSION=${{ matrix.docfx_version }} --tag combination/docfx:${{ matrix.docfx_version }}
+    - name: Push Docker image
+      run: docker push combination/docfx:${{ matrix.docfx_version }}
