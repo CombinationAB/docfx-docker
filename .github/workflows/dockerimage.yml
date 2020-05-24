@@ -20,7 +20,7 @@ jobs:
     - name: Docker login
       run: |
         echo ${GITHUB_TOKEN} | docker login -u ${GITHUB_ACTOR} --password-stdin docker.pkg.github.com
-        echo ${DOCKER_HUB_KEY} | docker login -u cmbdevopsbot --password-stdin combination
+        echo ${DOCKER_HUB_KEY} | docker login -u cmbdevopsbot --password-stdin
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         DOCKER_HUB_KEY: ${{ secrets.DOCKER_HUB_KEY }}
