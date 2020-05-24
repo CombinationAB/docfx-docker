@@ -22,6 +22,6 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Build Docker image
-      run: docker build . --file Dockerfile --build-arg DOCFX_VERSION=${{ matrix.docfx_version }} --tag docker.pkg.github.com/combinationab/docfx-docker:${{ matrix.docfx_version }}
+      run: docker build . --file Dockerfile --build-arg DOCFX_VERSION=${{ matrix.docfx_version }} --tag docker.pkg.github.com/combinationab/docfx-docker/docfx:${{ matrix.docfx_version }}
     - name: Push Docker image
-      run: docker push docker.pkg.github.com/combinationab/docfx-docker:${{ matrix.docfx_version }}
+      run: docker push docker.pkg.github.com/combinationab/docfx-docker/docfx:${{ matrix.docfx_version }}
