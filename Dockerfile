@@ -1,10 +1,8 @@
 ARG MONO_VERSION=6.8.0.96
 ARG DOCFX_VERSION=2.50
-ARG PLANTUML_VERSION=1.2020.2
 
 FROM mono:${MONO_VERSION}
 ARG DOCFX_VERSION
-ARG PLANTUML_VERSION
 
 RUN mkdir -p /usr/share/man/man1 \
  && apt-get update \
@@ -18,8 +16,6 @@ RUN curl -L "https://github.com/dotnet/docfx/releases/download/v${DOCFX_VERSION}
  && echo '#!/bin/sh\n\nexec mono /usr/share/docfx/docfx.exe $@' > /usr/bin/docfx \
  && chmod 755 /usr/bin/docfx \
  && docfx --version
-
-RUN curl -L "http://sourceforge.net/projects/plantuml/files/plantuml.{PLANTUML_VERSION}.jar/download" -o /usr/lib/plantuml.jar
 
 # Install dotnet
 RUN curl -L https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /etc/apt/trusted.gpg.d/microsoft.asc.gpg \
