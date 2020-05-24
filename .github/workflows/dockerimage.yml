@@ -1,4 +1,4 @@
-name: Build Docker image
+name: Docker image
 
 on:
   push:
@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-18.04
     strategy:
       matrix:
-        docfx_version: [2.50]
+        docfx_version: ["2.50"]
 
     steps:
     - uses: actions/checkout@v2
