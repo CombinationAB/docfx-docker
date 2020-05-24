@@ -18,10 +18,15 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Docker login
-      run: echo ${GITHUB_TOKEN} | docker login -u ${GITHUB_ACTOR} --password-stdin docker.pkg.github.com
+      run: |
+        echo ${GITHUB_TOKEN} | docker login -u ${GITHUB_ACTOR} --password-stdin docker.pkg.github.com
+        echo ${DOCKER_HUB_KEY} | docker login -u cmbdevopsbot --password-stdin combination
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        DOCKER_HUB_KEY: ${{ secrets.DOCKER_HUB_KEY }}
     - name: Build Docker image
-      run: docker build . --file Dockerfile --build-arg DOCFX_VERSION=${{ matrix.docfx_version }} --tag docker.pkg.github.com/combinationab/docfx-docker/docfx:${{ matrix.docfx_version }}
+      run: docker build . --file Dockerfile --build-arg DOCFX_VERSION=${{ matrix.docfx_version }} --tag docker.pkg.github.com/combinationab/docfx-docker/docfx:${{ matrix.docfx_version }} combination/docfx:${{ matrix.docfx_version }}
     - name: Push Docker image
-      run: docker push docker.pkg.github.com/combinationab/docfx-docker/docfx:${{ matrix.docfx_version }}
+      run: |
+        docker push docker.pkg.github.com/combinationab/docfx-docker/docfx:${{ matrix.docfx_version }}
+        docker push combination/docfx:${{ matrix.docfx_version }}
