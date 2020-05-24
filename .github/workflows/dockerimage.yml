@@ -17,6 +17,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Docker login
+      run: echo ${GITHUB_TOKEN} | docker login -u ${GITHUB_ACTOR} --password-stdin docker.pkg.github.com
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Build Docker image
       run: docker build . --file Dockerfile --build-arg DOCFX_VERSION=${{ matrix.docfx_version }} --tag docker.pkg.github.com/combinationab/docfx-docker:${{ matrix.docfx_version }}
     - name: Push Docker image
